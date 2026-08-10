@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+TC:wght@300;400;500&family=Space+Grotesk:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 7%;
+    --foreground: 36 18% 87%;
+    --card: 0 0% 9%;
+    --card-foreground: 36 18% 87%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 36 18% 87%;
+    --primary: 36 39% 57%;
+    --primary-foreground: 0 0% 7%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 36 18% 87%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 36 39% 57%;
+    --accent-foreground: 0 0% 7%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 36 39% 57%;
+    --radius: 0rem;
+    --font-heading: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    --font-body: 'Space Grotesk', 'Noto Serif TC', sans-serif;
+    --font-display: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    --font-mono: ui-monospace, monospace;
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 36 18% 87%;
+    --sidebar-primary: 36 39% 57%;
+    --sidebar-primary-foreground: 0 0% 7%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 36 18% 87%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 36 39% 57%;
+
+    /* Custom tokens */
+    --charcoal: #121212;
+    --canvas: #E8E2D6;
+    --obsidian: #2A2A2A;
+    --ochre: #C59D5F;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 36 18% 87%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    background-color: #121212;
+    color: #E8E2D6;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: #121212; }
+::-webkit-scrollbar-thumb { background: #C59D5F; }
+
+/* Selection */
+::selection { background: #C59D5F; color: #121212; }
+
+/* Nav overlay */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: #121212;
+  z-index: 100;
+
+  transform: translateY(-100%);
+  transition:
+    transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+    visibility 0s linear 0.7s;
+
+  overflow-y: auto;
+  visibility: hidden;
+  pointer-events: none;
+}
+.nav-overlay.open {
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+
+  transition:
+    transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+    visibility 0s;
+}
+
+/* Work strip hover */
+.work-strip {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.work-strip-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background-size: cover;
+  background-position: center;
+}
+.work-strip:hover .work-strip-bg {
+  opacity: 0.25;
+}
+.work-strip:hover .work-title {
+  color: #C59D5F;
+}
+.work-strip:hover .work-meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+.work-meta {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Ink bleed page transition */
+@keyframes inkBleed {
+  0% { clip-path: circle(0% at 50% 50%); opacity: 0; }
+  100% { clip-path: circle(150% at 50% 50%); opacity: 1; }
+}
+.ink-enter {
+  animation: inkBleed 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Parallax text */
+.parallax-slow {
+  will-change: transform;
+}
+
+/* Form input ledger style */
+.ledger-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #E8E2D630;
+  border-radius: 0;
+  color: #E8E2D6;
+  font-size: 1.125rem;
+  padding: 1rem 0;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.ledger-input:focus {
+  border-bottom-color: #C59D5F;
+}
+.ledger-input::placeholder {
+  color: #E8E2D650;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Strata sections */
+.stratum {
+  position: relative;
+}
+
+/* Ochre line decoration */
+.ochre-line::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: #C59D5F;
+  margin-bottom: 1.5rem;
+}
+
+/* Exhibition timeline */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #C59D5F;
+}

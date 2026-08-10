@@ -1,0 +1,163 @@
+import { useState, useRef, useEffect } from 'react';
+
+const works = [
+  {
+    id: 1,
+    titleZh: '『畫』荷·常與『變』',
+    titleEn: 'Painting the Lotus — Constancy & Change',
+    year: '2026',
+    medium: '水墨 Ink on Paper',
+    dimensions: '150 × 210 cm (with mounting)',
+    description: 'A triptych meditation on the lotus — eternal symbol of purity — rendered through three distinct moods: the jade shimmer of 翠影蕩樣, the golden rain of 荷花金雨, and the ink-cloud depths of 墨雲荷池.',
+    image: 'https://images.unsplash.com/photo-1578922746465-3a80a228f223?w=1200&q=80',
+    tag: 'Ink Painting',
+  },
+  {
+    id: 2,
+    titleZh: '鶴望迷想',
+    titleEn: 'The Crane\'s Reverie',
+    year: '2026',
+    medium: '水墨 Ink on Paper',
+    dimensions: '125 × 85 cm (with mounting)',
+    description: 'Birds of paradise emerge from swirling marble clouds and indigo waters — a triptych that captures longing frozen in mid-flight, the moment between earth and sky.',
+    image: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=1200&q=80',
+    tag: 'Ink Painting',
+  },
+  {
+    id: 3,
+    titleZh: '聲雷而振 趁風而追',
+    titleEn: 'Thunder Stirs the Wing — Wind Gives Chase',
+    year: '2026',
+    medium: '礦物彩 Mineral Pigments on Gold',
+    dimensions: '90 × 82 cm (with mounting)',
+    description: 'Fūjin and Raijin — the Japanese deities of wind and thunder — blaze across gilded paper in explosive mineral pigments. A dialogue between Taiwanese brush culture and Japanese mythological iconography.',
+    image: 'https://images.unsplash.com/photo-1508796079212-a4b83cbf734d?w=1200&q=80',
+    tag: 'Mineral Pigments',
+  },
+  {
+    id: 4,
+    titleZh: '紫藤花開',
+    titleEn: 'Wisteria in Bloom',
+    year: '2025',
+    medium: '水墨 Ink on Paper',
+    dimensions: '59 × 104 cm (with mounting)',
+    description: 'Cascading violet clusters fall from ink-dark branches in this diptych, each petal placed with the precision of a scientist and the grace of a poet.',
+    image: 'https://images.unsplash.com/photo-1456086272160-b28b0645b729?w=1200&q=80',
+    tag: 'Ink Painting',
+  },
+  {
+    id: 5,
+    titleZh: '靜觀獨踽 翱翔之翼',
+    titleEn: 'In Still Contemplation — Wings That Soar',
+    year: '2025',
+    medium: '水墨 Ink on Paper',
+    dimensions: '104 × 59 cm (with mounting)',
+    description: 'A windmill stands sentinel in pale winter mist as a formation of birds pivots across the sky — solitude and freedom in a single breath of ink.',
+    image: 'https://images.unsplash.com/photo-1444927714506-8492d94b4e3d?w=1200&q=80',
+    tag: 'Ink Painting',
+  },
+];
+
+function WorkStrip({ work, index }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="work-strip border-t border-border"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(30px)',
+        transition: `opacity 0.7s ease ${index * 0.1}s, transform 0.7s ease ${index * 0.1}s`,
+      }}
+    >
+      {/* BG image on hover */}
+      <div
+        className="work-strip-bg"
+        style={{ backgroundImage: `url(${work.image})` }}
+      />
+
+      <div className="relative z-10 px-8 md:px-16 py-8 md:py-10 flex flex-col md:flex-row md:items-center gap-4 md:gap-16">
+        {/* Index */}
+        <span className="text-muted-foreground text-xs tracking-widest font-mono w-8 flex-shrink-0">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        {/* Title */}
+        <div className="flex-1">
+          <h3 className="work-title font-heading text-canvas transition-colors duration-300" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 3rem)', lineHeight: '1' }}>
+            {work.titleZh}
+          </h3>
+          <p className="text-muted-foreground text-sm mt-1 font-body italic">{work.titleEn}</p>
+        </div>
+
+        {/* Meta (visible on hover) */}
+        <div className="work-meta flex gap-8 flex-shrink-0">
+          <div>
+            <p className="text-muted-foreground text-xs tracking-widest uppercase mb-1">Year</p>
+            <p className="text-canvas text-sm">{work.year}</p>
+          </div>
+          <div>
+            <p className="text-muted-foreground text-xs tracking-widest uppercase mb-1">Medium</p>
+            <p className="text-canvas text-sm">{work.medium}</p>
+          </div>
+          <div className="hidden md:block">
+            <p className="text-muted-foreground text-xs tracking-widest uppercase mb-1">Size</p>
+            <p className="text-canvas text-sm">{work.dimensions}</p>
+          </div>
+        </div>
+
+        {/* Tag */}
+        <span className="flex-shrink-0 text-xs text-ochre border border-ochre border-opacity-30 px-3 py-1 tracking-widest uppercase font-body">
+          {work.tag}
+        </span>
+      </div>
+
+      {/* Description strip (hover) */}
+      {hovered && (
+        <div className="relative z-10 px-8 md:px-16 pb-8 md:pl-40">
+          <p className="text-canvas opacity-70 text-base max-w-2xl leading-relaxed">{work.description}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function WorksSection() {
+  return (
+    <section id="works" className="stratum py-24 md:py-32" style={{ background: '#0e0e0e' }}>
+      <div className="px-8 md:px-16 mb-16">
+        <div className="flex items-end justify-between border-b border-border pb-8">
+          <div>
+            <p className="text-ochre text-xs tracking-[0.4em] uppercase font-body mb-3">Index of Creation</p>
+            <h2 className="font-heading text-canvas" style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)', lineHeight: '0.9' }}>
+              Selected Works<br /><em className="opacity-40" style={{ fontSize: '0.6em' }}>作品選</em>
+            </h2>
+          </div>
+          <p className="text-muted-foreground text-xs tracking-widest hidden md:block">
+            Hover to reveal details
+          </p>
+        </div>
+      </div>
+
+      <div>
+        {works.map((work, i) => (
+          <WorkStrip key={work.id} work={work} index={i} />
+        ))}
+      </div>
+    </section>
+  );
+}
