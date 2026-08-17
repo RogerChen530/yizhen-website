@@ -1,15 +1,87 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
+
+// Set this to your deployed Worker URL, e.g.
+// https://yizhen-contact-worker.<your-subdomain>.workers.dev
+const WORKER_URL = import.meta.env.VITE_CONTACT_WORKER_URL;
+
+// Set this to your Turnstile Site Key (safe to expose publicly)
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [drying, setDrying] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [error, setError] = useState('');
+  const [sending, setSending] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', _gotcha: '' });
+  const turnstileRef = useRef(null);
+  const widgetIdRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  // Load the Turnstile script once and render the widget
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+
+    const renderWidget = () => {
+      if (window.turnstile && turnstileRef.current && widgetIdRef.current === null) {
+        widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+        });
+      }
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = renderWidget;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDrying(true);
-    setTimeout(() => setSubmitted(true), 800);
+    setError('');
+
+    if (!WORKER_URL) {
+      setError('Contact form is not configured yet.');
+      return;
+    }
+
+    const turnstileToken = window.turnstile && widgetIdRef.current !== null
+      ? window.turnstile.getResponse(widgetIdRef.current)
+      : null;
+
+    if (!turnstileToken) {
+      setError('Please complete the verification.');
+      return;
+    }
+
+    setSending(true);
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, turnstileToken }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Failed to send');
+      }
+
+      setDrying(true);
+      setTimeout(() => setSubmitted(true), 800);
+    } catch (err) {
+      setError('Something went wrong. Please try again, or email directly.');
+      if (window.turnstile && widgetIdRef.current !== null) {
+        window.turnstile.reset(widgetIdRef.current);
+      }
+    } finally {
+      setSending(false);
+    }
   };
 
   if (submitted) {
@@ -53,6 +125,18 @@ export default function ContactSection() {
           {/* Right: Form */}
           <div className={`lg:col-span-8 transition-opacity duration-700 ${drying ? 'opacity-0' : 'opacity-100'}`}>
             <form onSubmit={handleSubmit} className="space-y-10">
+              {/* Honeypot field — hidden from real users, bots tend to fill every field */}
+              <input
+                type="text"
+                name="_gotcha"
+                value={form._gotcha}
+                onChange={e => setForm(f => ({ ...f, _gotcha: e.target.value }))}
+                tabIndex="-1"
+                autoComplete="off"
+                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                aria-hidden="true"
+              />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
                   <label className="text-muted-foreground text-xs tracking-[0.2em] uppercase block mb-2">Name · 姓名</label>
@@ -98,13 +182,20 @@ export default function ContactSection() {
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                 />
               </div>
+              <div ref={turnstileRef} />
+
+              {error && (
+                <p className="text-red-400 text-xs tracking-wide">{error}</p>
+              )}
+
               <div className="flex items-center justify-between pt-4 border-t border-border">
                 <p className="text-muted-foreground text-xs tracking-widest">All inquiries answered personally.</p>
                 <button
                   type="submit"
-                  className="flex items-center gap-3 bg-ochre text-charcoal px-8 py-4 text-xs tracking-[0.2em] uppercase font-body hover:bg-canvas transition-colors group"
+                  disabled={sending}
+                  className="flex items-center gap-3 bg-ochre text-charcoal px-8 py-4 text-xs tracking-[0.2em] uppercase font-body hover:bg-canvas transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Send Inquiry</span>
+                  <span>{sending ? 'Sending…' : 'Send Inquiry'}</span>
                   <Send size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
