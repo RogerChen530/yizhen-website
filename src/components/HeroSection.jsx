@@ -65,7 +65,7 @@ export default function HeroSection() {
             }}
           >
             <p className="text-ochre text-xs tracking-[0.4em] uppercase font-body mb-6 ochre-line">
-              廖純沂 · Chun-Yi Liao PhD
+              廖純沂 · Chun-Yi Liao PhD · リョウ・ジュンイ
             </p>
             <h1 className="font-heading text-canvas leading-none mb-2" style={{ fontSize: 'clamp(3.5rem, 10vw, 10rem)', lineHeight: '0.88', letterSpacing: '-0.03em' }}>
               書·畫·刻

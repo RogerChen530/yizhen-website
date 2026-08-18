@@ -10,7 +10,7 @@ export default function FooterSection() {
         {/* Identity */}
         <div>
           <p className="font-heading text-canvas text-2xl mb-1">廖純沂</p>
-          <p className="text-muted-foreground text-xs tracking-widest">Chun-Yi Liau PhD · 以真</p>
+          <p className="text-muted-foreground text-xs tracking-widest">Chun-Yi Liau PhD · 以真 · リョウ・ジュンイ</p>
           <p className="text-muted-foreground text-xs mt-3">書法 · 水墨 · 篆刻</p>
           <p className="text-muted-foreground text-xs">Calligraphy · Ink Painting · Seal Carving</p>
         </div>
@@ -44,7 +44,7 @@ export default function FooterSection() {
       </div>
 
       <div className="border-t border-border mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-muted-foreground text-xs">© 2026 廖純沂 Chun-Yi Liau. All rights reserved.</p>
+        <p className="text-muted-foreground text-xs">© 2026 廖純沂 Chun-Yi Liau · リョウ・ジュンイ. All rights reserved.</p>
         <p className="text-muted-foreground text-xs tracking-widest">Crafted with ink &amp; intention.</p>
       </div>
     </footer>

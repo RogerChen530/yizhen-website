@@ -29,7 +29,7 @@ export default function AboutSection() {
           <div className={`lg:col-span-9 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h2 className="font-heading text-canvas mb-10" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: '0.9' }}>
               廖純沂<br />
-              <em className="opacity-60" style={{ fontSize: '0.6em' }}>以真 · Chun-Yi Liau</em>
+              <em className="opacity-60" style={{ fontSize: '0.6em' }}>以真 · Chun-Yi Liau · リョウ・ジュンイ</em>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
