@@ -1,4 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
+import lotusTriptych from '../assets/works/lotus-triptych.jpg';
+import birdOfParadise from '../assets/works/bird-of-paradise.jpg';
+import windThunderGods from '../assets/works/wind-thunder-gods.jpg';
+import wisteria from '../assets/works/wisteria.jpg';
+import windmill from '../assets/works/windmill.jpg';
 
 const works = [
   {
@@ -9,7 +14,7 @@ const works = [
     medium: '水墨 Ink on Paper',
     dimensions: '150 × 210 cm (with mounting)',
     description: 'A triptych meditation on the lotus — eternal symbol of purity — rendered through three distinct moods: the jade shimmer of 翠影蕩樣, the golden rain of 荷花金雨, and the ink-cloud depths of 墨雲荷池.',
-    image: 'https://images.unsplash.com/photo-1578922746465-3a80a228f223?w=1200&q=80',
+    image: lotusTriptych,
     tag: 'Ink Painting',
   },
   {
@@ -20,7 +25,7 @@ const works = [
     medium: '水墨 Ink on Paper',
     dimensions: '125 × 85 cm (with mounting)',
     description: 'Birds of paradise emerge from swirling marble clouds and indigo waters — a triptych that captures longing frozen in mid-flight, the moment between earth and sky.',
-    image: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=1200&q=80',
+    image: birdOfParadise,
     tag: 'Ink Painting',
   },
   {
@@ -31,7 +36,7 @@ const works = [
     medium: '礦物彩 Mineral Pigments on Gold',
     dimensions: '90 × 82 cm (with mounting)',
     description: 'Fūjin and Raijin — the Japanese deities of wind and thunder — blaze across gilded paper in explosive mineral pigments. A dialogue between Taiwanese brush culture and Japanese mythological iconography.',
-    image: 'https://images.unsplash.com/photo-1508796079212-a4b83cbf734d?w=1200&q=80',
+    image: windThunderGods,
     tag: 'Mineral Pigments',
   },
   {
@@ -42,7 +47,7 @@ const works = [
     medium: '水墨 Ink on Paper',
     dimensions: '59 × 104 cm (with mounting)',
     description: 'Cascading violet clusters fall from ink-dark branches in this diptych, each petal placed with the precision of a scientist and the grace of a poet.',
-    image: 'https://images.unsplash.com/photo-1456086272160-b28b0645b729?w=1200&q=80',
+    image: wisteria,
     tag: 'Ink Painting',
   },
   {
@@ -53,7 +58,7 @@ const works = [
     medium: '水墨 Ink on Paper',
     dimensions: '104 × 59 cm (with mounting)',
     description: 'A windmill stands sentinel in pale winter mist as a formation of birds pivots across the sky — solitude and freedom in a single breath of ink.',
-    image: 'https://images.unsplash.com/photo-1444927714506-8492d94b4e3d?w=1200&q=80',
+    image: windmill,
     tag: 'Ink Painting',
   },
 ];
