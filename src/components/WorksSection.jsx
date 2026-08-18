@@ -63,7 +63,7 @@ const works = [
   },
 ];
 
-function WorkStrip({ work, index }) {
+function WorkStrip({ work, index, onOpen }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -80,9 +80,14 @@ function WorkStrip({ work, index }) {
   return (
     <div
       ref={ref}
-      className="work-strip border-t border-border"
+      className="work-strip border-t border-border cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => onOpen(index)}
+      role="button"
+      tabIndex={0}
+      aria-label={`View full image of ${work.titleEn}`}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(index); } }}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(30px)',
@@ -135,13 +140,93 @@ function WorkStrip({ work, index }) {
       {hovered && (
         <div className="relative z-10 px-8 md:px-16 pb-8 md:pl-40">
           <p className="text-canvas opacity-70 text-base max-w-2xl leading-relaxed">{work.description}</p>
+          <p className="text-ochre opacity-80 text-xs mt-3 tracking-widest uppercase">Click to view full image →</p>
         </div>
       )}
     </div>
   );
 }
 
+function Lightbox({ work, onClose, onPrev, onNext }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'ArrowRight') onNext();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKey);
+    };
+  }, [onClose, onPrev, onNext]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:px-12 md:py-12"
+      style={{ background: 'rgba(10, 9, 8, 0.96)' }}
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute top-6 right-6 md:top-8 md:right-8 text-canvas opacity-60 hover:opacity-100 transition-opacity text-3xl leading-none z-10"
+      >
+        ×
+      </button>
+
+      {/* Prev arrow */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        aria-label="Previous work"
+        className="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 text-canvas opacity-50 hover:opacity-100 transition-opacity text-4xl leading-none z-10 px-2"
+      >
+        ‹
+      </button>
+
+      {/* Next arrow */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        aria-label="Next work"
+        className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 text-canvas opacity-50 hover:opacity-100 transition-opacity text-4xl leading-none z-10 px-2"
+      >
+        ›
+      </button>
+
+      <div
+        className="max-w-6xl w-full flex flex-col items-center gap-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={work.image}
+          alt={work.titleEn}
+          className="max-h-[75vh] w-auto object-contain"
+          style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
+        />
+        <div className="text-center px-4">
+          <h3 className="font-heading text-canvas" style={{ fontSize: 'clamp(1.25rem, 2.5vw, 2rem)' }}>
+            {work.titleZh}
+          </h3>
+          <p className="text-muted-foreground text-sm mt-1 font-body italic">{work.titleEn}</p>
+          <div className="flex gap-6 justify-center mt-4 text-xs text-muted-foreground tracking-widest uppercase">
+            <span>{work.year}</span>
+            <span>{work.medium}</span>
+            <span>{work.dimensions}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function WorksSection() {
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  const handlePrev = () => setLightboxIndex((i) => (i - 1 + works.length) % works.length);
+  const handleNext = () => setLightboxIndex((i) => (i + 1) % works.length);
+
   return (
     <section id="works" className="stratum py-24 md:py-32" style={{ background: '#0e0e0e' }}>
       <div className="px-8 md:px-16 mb-16">
@@ -153,16 +238,25 @@ export default function WorksSection() {
             </h2>
           </div>
           <p className="text-muted-foreground text-xs tracking-widest hidden md:block">
-            Hover to reveal details
+            Click to view full image
           </p>
         </div>
       </div>
 
       <div>
         {works.map((work, i) => (
-          <WorkStrip key={work.id} work={work} index={i} />
+          <WorkStrip key={work.id} work={work} index={i} onOpen={setLightboxIndex} />
         ))}
       </div>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          work={works[lightboxIndex]}
+          onClose={() => setLightboxIndex(null)}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+      )}
     </section>
   );
 }
