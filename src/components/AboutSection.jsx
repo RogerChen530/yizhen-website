@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 
 const bioText = {
   zh: [
-    '廖純沂是一位科學藝術家——以科學家的訓練為根基，投身書法、水墨與篆刻創作。她擁有中山醫學大學醫學研究博士學位，長年從事生物工程與蛋白質化學研究。對她而言，科學與藝術並非兩種身分，而是理解世界的兩種語言。',
-    '2021年，她開始系統性研習書法、水墨與篆刻，並迅速在台灣、日本、韓國等地展出，入選日本每日書道展、產經國際書展、現展（GENTEN）等公募展，作品曾於東京國立新美術館、大阪市立美術館、京都市京瓷美術館展出。她的創作，是科學家的觀察與藝術家的直覺並行而存的視覺語言。',
+    '廖純沂（以真），是一位跨越科學與藝術領域的臺灣藝術家。擁有中山醫學大學醫學研究博士學位，長年從事生物工程、蛋白質化學研究與大學教育。2021年起投入書法、水墨與篆刻創作，以東方傳統筆墨為根基，探索文字結構、墨色變化、筆勢、空間與造形的多元可能。書法由篆隸等古典書體延伸至文字的拆解、重組與抽象化；水墨游移於具象與自由的墨色表現之間；篆刻則關注線條、結構、留白與文字造形。科學訓練所培養的觀察與分析，與藝術創作中的直覺、感受及偶發性，在其創作中並行而存。',
+    '作品曾入選日本每日書道展、產經國際書展、現展（GENTEN）、NAU21世紀美術連立展等公募展，並於臺灣、日本及韓國展出，包括東京國立新美術館、東京都美術館、大阪市立美術館及京都市京瓷美術館等場館。持續在傳統筆墨與當代表現之間，尋找個人的藝術語彙。',
   ],
   en: [
-    'Chun-Yi Liau is a scientist-artist — grounded in scientific training, devoted to calligraphy, ink painting, and seal carving. She holds a PhD in Medical Research from Chung Shan Medical University and has spent years researching bioengineering and protein chemistry. To her, science and art are not two separate identities, but two languages for understanding the world.',
-    'In 2021, she began systematic study of calligraphy, ink painting, and seal carving, and quickly exhibited across Taiwan, Japan, and Korea — selected for Japan\'s Mainichi Shodo Exhibition, the Sankei International Calligraphy Exhibition, and GENTEN, among other juried shows, with work shown at the National Art Center Tokyo, Osaka City Museum of Fine Arts, and Kyoto City KYOCERA Museum of Art. Her practice is a visual language where a scientist\'s observation and an artist\'s intuition move as one.',
+    'Chun-Yi Liau (Yi-Zhen) is a Taiwanese artist working across the fields of science and art. She holds a PhD in Medical Research from Chung Shan Medical University and has spent many years in bioengineering and protein chemistry research, as well as university teaching. Since 2021, she has devoted herself to calligraphy, ink painting, and seal carving, grounded in East Asian brush-and-ink tradition, exploring the manifold possibilities of character structure, ink tonality, brush momentum, space, and form. Her calligraphy extends from classical scripts such as seal and clerical script toward the deconstruction, recombination, and abstraction of characters; her ink painting moves between representational depiction and freer expressions of ink; her seal carving attends to line, structure, negative space, and the relationship between text and form. The observation and analysis cultivated by her scientific training coexist, in her work, with the intuition, sensation, and spontaneity of artistic creation.',
+    'Her work has been selected for juried exhibitions including Japan\'s Mainichi Shodo Exhibition, the Sankei International Calligraphy Exhibition, GENTEN, and the NAU 21st Century Art Federation Exhibition, and shown in Taiwan, Japan, and Korea, including at the National Art Center Tokyo, the Tokyo Metropolitan Art Museum, Osaka City Museum of Fine Arts, and Kyoto City KYOCERA Museum of Art. She continues to search for a personal artistic vocabulary between traditional brush-and-ink and contemporary expression.',
   ],
   ja: [
-    '廖純沂は科学者としての訓練を礎とし、書道・水墨画・篆刻に取り組む「科学芸術家」である。中山医学大学で医学研究の博士号を取得し、長年にわたり生物工学と蛋白質化学の研究に従事してきた。彼女にとって科学と芸術は別々の顔ではなく、世界を理解するための二つの言語である。',
-    '2021年、書道・水墨画・篆刻の体系的な研鑽を開始し、台湾・日本・韓国で作品を発表。日本每日書道展、産経国際書展、現展（GENTEN）などの公募展に入選し、国立東京新美術館、大阪市立美術館、京都市京セラ美術館などで作品を展示してきた。彼女の創作は、科学者の観察眼と芸術家の直感が並び立つ、一つの視覚言語である。',
+    '廖純沂（以真）は、科学と芸術の領域を横断する台湾の芸術家である。中山医学大学で医学研究の博士号を取得し、長年にわたり生物工学・蛋白質化学の研究と大学教育に従事してきた。2021年より書道・水墨画・篆刻の創作に取り組み、東アジアの伝統的な筆墨を基盤としながら、文字構造・墨色の変化・筆勢・空間・造形の多様な可能性を探求している。書道は篆書・隷書などの古典書体から、文字の分解・再構成・抽象化へと展開し、水墨画は具象と自由な墨色表現の間を行き来し、篆刻は線・構造・余白と文字造形の関係に着目する。科学的訓練によって培われた観察と分析は、芸術創作における直感・感覚・偶発性と、その創作の中で並存している。',
+    '作品は日本每日書道展、産経国際書展、現展（GENTEN）、NAU21世紀美術連立展などの公募展に入選し、台湾・日本・韓国で展示されてきた。国立新美術館（東京）、東京都美術館、大阪市立美術館、京都市京セラ美術館などでの展示歴を持つ。伝統的な筆墨と現代的表現の間で、個人的な芸術的語彙を探求し続けている。',
   ],
 };
 
