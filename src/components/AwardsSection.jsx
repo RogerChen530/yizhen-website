@@ -54,11 +54,8 @@ export default function AwardsSection() {
               transition: `opacity 0.5s ease ${i * 0.06}s, transform 0.5s ease ${i * 0.06}s`,
             }}
           >
-            <div className="flex items-start justify-between mb-4">
+            <div className="mb-4">
               <span className="text-ochre text-xs tracking-widest font-mono">{award.year}</span>
-              <span className="text-xs text-muted-foreground tracking-wider border border-border px-2 py-0.5 group-hover:border-ochre group-hover:text-ochre transition-colors">
-                {award.level.split(' ')[0]}
-              </span>
             </div>
             <p className="text-canvas text-base leading-snug mb-3 font-body">{award.title}</p>
             <p className="text-muted-foreground text-xs">{award.org}</p>
