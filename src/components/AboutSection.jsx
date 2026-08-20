@@ -18,22 +18,25 @@ const bioText = {
 
 const credentials = {
   zh: {
-    labels: { academic: '學歷', disciplines: '專擅', memberships: '會員' },
-    academic: ['中山醫學大學 醫學研究 博士', '大同大學 化學工程 碩士', '國立自然科學博物館 科學大使'],
+    labels: { academic: '學歷', positions: '曾任', disciplines: '專擅', memberships: '社團經歷' },
+    academic: ['中山醫學大學 醫學研究所 博士', '大同工學院 化學工程學系 碩士', '國立自然科學博物館 科學大使', '台灣書法年展 免審'],
+    positions: ['臺中科技大學 美容系 兼任助理教授', '中興大學 兼任助理教授', '大同大學 通識中心 兼任助理教授', '大同大學 生物工程學系 助理教授'],
     disciplines: ['書法', '水墨', '篆刻'],
-    memberships: ['台灣書法年展・入選', '中華民國書學會・永久會員', '臺中藝術家俱樂部', '台灣書法學會'],
+    memberships: ['台灣生物化學及分子生物學學會（永久會員）', '台灣化學工程學會（永久會員）', '台灣化學學會（永久會員）', '中華民國書學會（永久會員）', '台灣書法學會', '台灣中國書法學會', '臺中市書法學會', '臺中藝術家俱樂部', '雲林縣藝文學會', '中華民國書法教育學會'],
   },
   en: {
-    labels: { academic: 'Academic', disciplines: 'Disciplines', memberships: 'Memberships' },
-    academic: ['PhD, Medical Research — Chung Shan Medical University', 'MSc, Chemical Engineering — Tatung University', 'Science Ambassador — National Museum of Natural Science'],
+    labels: { academic: 'Academic', positions: 'Prior Positions', disciplines: 'Disciplines', memberships: 'Societies & Memberships' },
+    academic: ['PhD, Medical Research — Chung Shan Medical University', 'MSc, Chemical Engineering — Tatung Institute of Technology', 'Science Ambassador — National Museum of Natural Science', 'Exempt-Review Status — Taiwan Calligraphy Annual Exhibition'],
+    positions: ['Adjunct Assistant Professor, Dept. of Cosmetic Science — Taichung University of Science and Technology', 'Adjunct Assistant Professor — National Chung Hsing University', 'Adjunct Assistant Professor, General Education Center — Tatung University', 'Assistant Professor, Dept. of Bioengineering — Tatung University'],
     disciplines: ['Calligraphy', 'Ink Painting', 'Seal Carving'],
-    memberships: ['Taiwan Calligraphy Annual Exhibition · Juried Selection', 'Calligraphy Society of the R.O.C. · Permanent Member', 'Taichung Artists Club', 'Taiwan Calligraphy Society'],
+    memberships: ['Taiwan Society of Biochemistry and Molecular Biology (Permanent Member)', 'Taiwan Institute of Chemical Engineers (Permanent Member)', 'Chemical Society of Taiwan (Permanent Member)', 'Calligraphy Society of the R.O.C. (Permanent Member)', 'Taiwan Calligraphy Society', 'Taiwan Chinese Calligraphy Society', 'Taichung Calligraphy Society', 'Taichung Artists Club', 'Yunlin County Literary and Art Society', 'Calligraphy Education Society of the R.O.C.'],
   },
   ja: {
-    labels: { academic: '学歴', disciplines: '専門', memberships: '会員' },
-    academic: ['中山医学大学 医学研究 博士', '大同大学 化学工学 修士', '国立自然科学博物館 サイエンスアンバサダー'],
+    labels: { academic: '学歴', positions: '前職', disciplines: '専門', memberships: '所属学会・団体' },
+    academic: ['中山医学大学 医学研究科 博士', '大同工学院 化学工学科 修士', '国立自然科学博物館 サイエンスアンバサダー', '台湾書法年展 審査免除'],
+    positions: ['台中科技大学 美容学科 兼任助理教授', '中興大学 兼任助理教授', '大同大学 教養教育センター 兼任助理教授', '大同大学 生物工学科 助理教授'],
     disciplines: ['書道', '水墨画', '篆刻'],
-    memberships: ['台湾書法年展・入選', '中華民国書学会・終身会員', '台中アーティストクラブ', '台湾書法学会'],
+    memberships: ['台湾生化学・分子生物学会（終身会員）', '台湾化学工学会（終身会員）', '台湾化学会（終身会員）', '中華民国書学会（終身会員）', '台湾書法学会', '台湾中国書法学会', '台中市書法学会', '台中アーティストクラブ', '雲林県文芸学会', '中華民国書法教育学会'],
   },
 };
 
@@ -114,6 +117,14 @@ export default function AboutSection() {
                     </ul>
                   </div>
                   <div>
+                    <p className="text-muted-foreground text-xs tracking-widest uppercase mb-3 font-body">{credentials[lang].labels.positions}</p>
+                    <ul className="space-y-2">
+                      {credentials[lang].positions.map(item => (
+                        <li key={item} className="text-canvas opacity-70 text-sm leading-snug border-l border-border pl-4">{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
                     <p className="text-muted-foreground text-xs tracking-widest uppercase mb-3 font-body">{credentials[lang].labels.disciplines}</p>
                     <ul className="space-y-2">
                       {credentials[lang].disciplines.map(item => (
@@ -125,7 +136,7 @@ export default function AboutSection() {
                     <p className="text-muted-foreground text-xs tracking-widest uppercase mb-3 font-body">{credentials[lang].labels.memberships}</p>
                     <ul className="space-y-2">
                       {credentials[lang].memberships.map(item => (
-                        <li key={item} className="text-canvas opacity-70 text-sm border-l border-border pl-4">{item}</li>
+                        <li key={item} className="text-canvas opacity-70 text-sm leading-snug border-l border-border pl-4">{item}</li>
                       ))}
                     </ul>
                   </div>
