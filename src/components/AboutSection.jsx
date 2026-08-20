@@ -2,17 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 
 const bioText = {
   zh: [
-    '廖純沂是一位以科學家身分受訓、卻以藝術家信念創作的實踐者，她將蛋白質化學的精密思維與東亞書畫的流動筆法相互交融。擁有中山醫學大學醫學研究博士學位的她，將分析式的嚴謹注入每一筆之中——書法、水墨、篆刻，於她而言並非消遣，而是探究世界的另一種語言。',
-    '她於2021年開始書畫篆刻的研習，短短數年間已在台灣、日本、韓國等地的重要展覽中嶄露頭角。以科學家的嚴謹與藝術家的感性，她的作品融合了傳統筆墨的深度與現代視野的廣度。',
-    '自2021年投入創作以來，她迅速建立起國際能見度，作品陸續於東京國立新美術館、大阪市立美術館、京都市京瓷美術館等重要場館展出。',
+    '廖純沂是一位科學藝術家——以科學家的訓練為根基，投身書法、水墨與篆刻創作。她擁有中山醫學大學醫學研究博士學位，長年從事生物工程與蛋白質化學研究。對她而言，科學與藝術並非兩種身分，而是理解世界的兩種語言。',
+    '2021年，她開始系統性研習書法、水墨與篆刻，並迅速在台灣、日本、韓國等地展出，入選日本每日書道展、產經國際書展、現展（GENTEN）等公募展，作品曾於東京國立新美術館、大阪市立美術館、京都市京瓷美術館展出。她的創作，是科學家的觀察與藝術家的直覺並行而存的視覺語言。',
   ],
   en: [
-    'A scientist by training and an artist by conviction, Chun-Yi Liau bridges the precision of protein chemistry with the fluid discipline of East Asian brushwork. Holding a PhD in Medical Research from Chung Shan Medical University, she brings an analytical rigor to every stroke—treating calligraphy, ink painting, and seal carving not as recreation, but as a second language of inquiry.',
-    'Beginning her artistic journey in 2021, she has rapidly established an international presence, exhibiting at premier venues including the National Art Center Tokyo, Osaka City Museum of Fine Arts, and Kyoto City KYOCERA Museum of Art.',
+    'Chun-Yi Liau is a scientist-artist — grounded in scientific training, devoted to calligraphy, ink painting, and seal carving. She holds a PhD in Medical Research from Chung Shan Medical University and has spent years researching bioengineering and protein chemistry. To her, science and art are not two separate identities, but two languages for understanding the world.',
+    'In 2021, she began systematic study of calligraphy, ink painting, and seal carving, and quickly exhibited across Taiwan, Japan, and Korea — selected for Japan\'s Mainichi Shodo Exhibition, the Sankei International Calligraphy Exhibition, and GENTEN, among other juried shows, with work shown at the National Art Center Tokyo, Osaka City Museum of Fine Arts, and Kyoto City KYOCERA Museum of Art. Her practice is a visual language where a scientist\'s observation and an artist\'s intuition move as one.',
   ],
   ja: [
-    '科学者としての訓練を積み、芸術家としての信念を貫く廖純沂は、蛋白質化学の精密さと東アジア書画の流麗な技法を結びつける。中山医学大学で医学研究の博士号を取得した彼女は、一筆一筆に分析的な厳密さを込め、書道・水墨画・篆刻を単なる趣味ではなく、探究のためのもう一つの言語として捉えている。',
-    '2021年に書画篆刻の研鑽を始めて以来、わずか数年で台湾・日本・韓国など各地の重要な展覧会で頭角を現し、国際的な存在感を確立してきた。国立新美術館（東京）、大阪市立美術館、京都市京セラ美術館をはじめとする一流の会場で作品を発表している。',
+    '廖純沂は科学者としての訓練を礎とし、書道・水墨画・篆刻に取り組む「科学芸術家」である。中山医学大学で医学研究の博士号を取得し、長年にわたり生物工学と蛋白質化学の研究に従事してきた。彼女にとって科学と芸術は別々の顔ではなく、世界を理解するための二つの言語である。',
+    '2021年、書道・水墨画・篆刻の体系的な研鑽を開始し、台湾・日本・韓国で作品を発表。日本每日書道展、産経国際書展、現展（GENTEN）などの公募展に入選し、国立東京新美術館、大阪市立美術館、京都市京セラ美術館などで作品を展示してきた。彼女の創作は、科学者の観察眼と芸術家の直感が並び立つ、一つの視覚言語である。',
   ],
 };
 
