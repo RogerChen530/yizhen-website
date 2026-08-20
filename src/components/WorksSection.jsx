@@ -172,7 +172,11 @@ function Lightbox({ work, onClose, onPrev, onNext }) {
       <button
         onClick={onClose}
         aria-label="Close"
-        className="absolute top-6 right-6 md:top-8 md:right-8 text-canvas opacity-60 hover:opacity-100 transition-opacity text-3xl leading-none z-10"
+        className="absolute flex h-12 w-12 items-center justify-center text-canvas opacity-60 hover:opacity-100 transition-opacity text-3xl leading-none z-10"
+        style={{
+          top: 'max(1.5rem, env(safe-area-inset-top))',
+          right: 'max(1.5rem, env(safe-area-inset-right))',
+        }}
       >
         ×
       </button>
@@ -215,6 +219,12 @@ function Lightbox({ work, onClose, onPrev, onNext }) {
             <span>{work.medium}</span>
             <span>{work.dimensions}</span>
           </div>
+          <button
+            onClick={onClose}
+            className="mt-5 min-h-12 border border-ochre px-8 py-3 text-xs tracking-widest uppercase text-ochre transition-colors hover:bg-ochre hover:bg-opacity-10 font-body"
+          >
+            Close Image
+          </button>
         </div>
       </div>
     </div>
